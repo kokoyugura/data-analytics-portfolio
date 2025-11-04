@@ -3,7 +3,7 @@
 ## 📌 プロジェクト概要
 本プロジェクトは、小売・ワイン販売などの顧客データを想定した「顧客離反予測モデル」です。  
 顧客の購買履歴データから特徴量（RFM＋行動傾向）を作成し、  
-ランダムフォレストによる離反確率の推定を行っています。
+LightGBMによる離反確率の推定を行っています。
 
 ---
 
@@ -17,12 +17,9 @@
 ## 🧩 データ構成
 | ファイル名 | 内容 |
 |-------------|------|
-| `data/transactions.csv` | 顧客別の購買履歴（1行＝1トランザクション） |
-| `data/features.csv` | 顧客単位に集約した特徴量データ（RFM＋傾向指標） |
-| `notebooks/01_feature_engineering.ipynb` | 特徴量生成スクリプト |
-| `notebooks/02_modeling.ipynb` | 離反予測モデル構築 |
-| `notebooks/03_prediction.ipynb` | 新規顧客データに対する離反確率予測 |
-| `output/` | 可視化・モデルファイルなど |
+| `00.離反顧客サンプルデータ作成.ipynb` | ランダムデータ作成スクリプト |
+| `01.特徴量分析.ipynb` | 特徴量生成スクリプト |
+| `02.モデリング.ipynb` | 離反予測モデル構築  |
 
 ---
 
@@ -45,32 +42,9 @@
 | ChurnFlag | 離反フラグ（90日以上購入なし＝1） |
 
 ### 3️⃣ モデル構築
-- **アルゴリズム**：RandomForestClassifier  
+- **アルゴリズム**：LGBMClassifier  
 - **評価指標**：Accuracy, ROC-AUC  
 - **学習データ分割**：train 80% / test 20%
-
-### 4️⃣ 新規顧客の離反確率予測
-顧客の特徴量を入力すると、離反確率を算出：
-
-| Recency | Frequency | Monetary | AvgInterval | Last3MonthsPurchases | 離反確率 |
-|----------|------------|-----------|--------------|----------------------|-----------|
-| 150 | 2 | 12000 | 70 | 0 | 91.4% |
-| 10 | 8 | 85000 | 30 | 3 | 3.8% |
-
----
-
-## 📊 特徴量重要度（例）
-![feature_importance](output/feature_importance.png)
-
-| Feature | Importance |
-|----------|-------------|
-| Recency | 0.47 |
-| Last3MonthsPurchases | 0.21 |
-| AvgInterval | 0.16 |
-| Frequency | 0.10 |
-| Monetary | 0.06 |
-
----
 
 ## 🧰 使用技術
 | 分類 | 内容 |
