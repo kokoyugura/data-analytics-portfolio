@@ -208,3 +208,6 @@ __marimo__/
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
+
+# exclude personal push script
+push.bat
